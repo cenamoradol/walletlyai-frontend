@@ -369,12 +369,22 @@ export default function AddTransactionScreen({ navigation }: any) {
         </Pressable>
 
         {/* Modal categorías */}
-        <CategorySelectModal
-          visible={showCatModal}
-          onClose={() => setShowCatModal(false)}
-          categories={filteredCategories}
-          onSelect={(c) => setSelectedCategoryId(c.id)}
-        />
+       <CategorySelectModal
+  visible={showCatModal}
+  onClose={() => setShowCatModal(false)}
+  categories={filteredCategories}           // <- antes: categoriesFilteredByType
+  onSelect={(cat) => {                      // <- antes: setSelectedCategory
+    setSelectedCategoryId(cat.id);
+  }}
+  categoryType={type}                       // <- antes: currentType
+  onCreated={(newCat) => {
+    // agrega nueva categoría a la lista local
+    setCategories(prev => [newCat, ...prev]);
+    // selección inmediata (por si el modal no alcanzara a llamar onSelect)
+    setSelectedCategoryId(newCat.id);
+  }}
+/>
+
       </DismissibleScrollView>
     </TouchableWithoutFeedback>
   );

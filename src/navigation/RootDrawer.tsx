@@ -1,9 +1,11 @@
+// src/navigation/RootDrawer.tsx
 import React from 'react';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import MainTabs from './MainTabs';
 import { View, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import DetectionScreen from '../screens/DetectionScreen';
+import CategoriesManageScreen from '../screens/CategoriesManageScreen'; // 👈 NEW
 
 const Drawer = createDrawerNavigator();
 
@@ -46,6 +48,15 @@ function CustomDrawerContent(props: any) {
         style={{ borderBottomWidth: 1, borderBottomColor: '#1f2937' }}
       />
 
+      {/* Categorías */}
+      <DrawerItem
+        label="Categorías"
+        labelStyle={{ color: '#e5e7eb' }}
+        icon={({ size }) => <Ionicons name="pricetags" size={size} color="#e5e7eb" />}
+        onPress={() => props.navigation.navigate('Categories')}
+        style={{ borderBottomWidth: 1, borderBottomColor: '#1f2937' }}
+      />
+
       {/* Configuración */}
       <DrawerItem
         label="Configuración"
@@ -70,6 +81,17 @@ export default function RootDrawer() {
     >
       <Drawer.Screen name="Main" component={MainTabs} />
       <Drawer.Screen name="Detection" component={DetectionScreen} />
+      {/* 👇 Nueva pantalla con header propio oscuro */}
+      <Drawer.Screen
+        name="Categories"
+        component={CategoriesManageScreen}
+        options={{
+          headerShown: true,
+          title: 'Categorías',
+          headerStyle: { backgroundColor: '#0b1220' },
+          headerTintColor: '#fff',
+        }}
+      />
       <Drawer.Screen
         name="Settings"
         children={() => <PlaceholderScreen title="Configuración" />}

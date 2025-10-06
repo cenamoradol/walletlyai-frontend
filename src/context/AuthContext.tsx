@@ -1,8 +1,8 @@
-import React, { createContext, useContext, useEffect, useRef, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { Alert } from 'react-native';
+import * as SecureStore from 'expo-secure-store'; // si no lo instalaste, cambia por AsyncStorage
 import { login as loginApi, register as registerApi } from '../services/auth';
-import { setAuthToken, setOnUnauthorized } from '../api/client';
-import { storage } from '../utils/storage';
+import { api, setAuthToken, setOnUnauthorized } from '../api/client';
 
 type AuthContextType = {
   token: string | null;
@@ -15,16 +15,28 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 const TOKEN_KEY = 'walletlyai_token';
 
+async function saveToken(t: string | null) {
+  if (t) await SecureStore.setItemAsync(TOKEN_KEY, t);
+  else await SecureStore.deleteItemAsync(TOKEN_KEY);
+}
+
+async function loadToken() {
+  return await SecureStore.getItemAsync(TOKEN_KEY);
+}
+
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const isLoggingOutRef = useRef(false);
-  const showedExpireAlertRef = useRef(false);
 
   useEffect(() => {
+    setOnUnauthorized(async () => {
+      await logout();
+      Alert.alert('Sesión expirada', 'Vuelve a iniciar sesión.');
+    });
+
     (async () => {
       try {
-        const stored = await storage.getItem(TOKEN_KEY);
+        const stored = await loadToken();
         if (stored) {
           setToken(stored);
           setAuthToken(stored);
@@ -33,53 +45,26 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setIsLoading(false);
       }
     })();
-  }, []);
-
-  useEffect(() => {
-    // Manejo global 401 → logout
-    setOnUnauthorized(async () => {
-      if (isLoggingOutRef.current) return;
-      isLoggingOutRef.current = true;
-
-      if (!showedExpireAlertRef.current) {
-        showedExpireAlertRef.current = true;
-        Alert.alert('Sesión expirada', 'Por seguridad, vuelve a iniciar sesión.');
-      }
-
-      await storage.deleteItem(TOKEN_KEY);
-      setToken(null);
-      setAuthToken(null);
-
-      // Permite nuevas alertas tras un tiempo
-      setTimeout(() => {
-        isLoggingOutRef.current = false;
-        showedExpireAlertRef.current = false;
-      }, 500);
-    });
 
     return () => setOnUnauthorized(null);
   }, []);
 
   const login = async (email: string, password: string) => {
-    
     const { access_token } = await loginApi({ email, password });
-    console.log(access_token)
-    await storage.setItem(TOKEN_KEY, access_token);
     setToken(access_token);
     setAuthToken(access_token);
+    await saveToken(access_token);
   };
 
   const register = async (name: string, email: string, password: string) => {
-    const { access_token } = await registerApi({ name, email, password });
-    await storage.setItem(TOKEN_KEY, access_token);
-    setToken(access_token);
-    setAuthToken(access_token);
+    await registerApi({ name, email, password });
+    Alert.alert('Listo', 'Cuenta creada. Ahora inicia sesión.');
   };
 
   const logout = async () => {
-    await storage.deleteItem(TOKEN_KEY);
     setToken(null);
     setAuthToken(null);
+    await saveToken(null);
   };
 
   return (
