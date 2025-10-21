@@ -13,6 +13,7 @@ import { DataCacheProvider } from './src/context/DataCacheContext';
 import * as Linking from 'expo-linking';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { saveTransactionFromText } from './src/services/ai';
+import { PreferencesProvider } from './src/context/PreferencesContext';
 
 // misma clave que usa DetectionScreen
 const DL_ENABLED_KEY = 'txn_detection_deeplink_enabled';
@@ -89,6 +90,7 @@ export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <AuthProvider>
+         <PreferencesProvider>
         {/* DataCacheProvider debe envolver la navegación para que todas las screens puedan usar useDataCache */}
         <DataCacheProvider>
           <NavigationContainer linking={linking}>
@@ -98,6 +100,7 @@ export default function App() {
             </GlobalKeyboardDismiss>
           </NavigationContainer>
         </DataCacheProvider>
+        </PreferencesProvider>
       </AuthProvider>
     </GestureHandlerRootView>
   );

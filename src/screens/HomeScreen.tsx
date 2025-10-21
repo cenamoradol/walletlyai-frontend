@@ -1,3 +1,4 @@
+// src/screens/HomeScreen.tsx
 import React, { useMemo, useState } from 'react';
 import { View, Text, StyleSheet, Pressable, RefreshControl, Platform } from 'react-native';
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
@@ -5,8 +6,10 @@ import { useAuth } from '../context/AuthContext';
 import { useDataCache } from '../context/DataCacheContext';
 import DismissibleScrollView from '../components/DismissibleScrollView';
 import TransactionItem from '../components/TransactionItem';
+import { useMoney } from '../utils/money'; // 👈 nuevo (formato de moneda dinámico)
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-// ------- helpers de fechas y formato -------
+// ------- helpers de fechas -------
 type RangeKey = '7d' | '30d' | 'month' | 'custom';
 
 function formatDateISO(d: Date) {
@@ -33,18 +36,12 @@ function getChipRange(range: Exclude<RangeKey, 'custom'>): { start: string; end:
   }
   return monthStartEnd();
 }
-function money(n: number) {
-  try {
-    return new Intl.NumberFormat('es-HN', { style: 'currency', currency: 'HNL', maximumFractionDigits: 2 }).format(n);
-  } catch {
-    return `$${n.toFixed(2)}`;
-  }
-}
-// -----------------------------------------
+// ---------------------------------
 
 export default function HomeScreen({ navigation }: any) {
   const { logout } = useAuth();
   const { ready, getDashboard, getRecentAll, refresh } = useDataCache();
+  const { format } = useMoney(); // 👈 usar formato de moneda del backend
 
   const [range, setRange] = useState<RangeKey>('month');
   const [customStart, setCustomStart] = useState<string | null>(null);
@@ -55,11 +52,11 @@ export default function HomeScreen({ navigation }: any) {
   const [showEndPicker, setShowEndPicker] = useState(false);
 
   const fallback = getChipRange('month');
-  const start = range === 'custom' ? (customStart ?? fallback.start) : getChipRange(range as Exclude<RangeKey,'custom'>).start;
-  const end   = range === 'custom' ? (customEnd   ?? fallback.end  ) : getChipRange(range as Exclude<RangeKey,'custom'>).end;
+  const start = range === 'custom' ? (customStart ?? fallback.start) : getChipRange(range as Exclude<RangeKey, 'custom'>).start;
+  const end = range === 'custom' ? (customEnd ?? fallback.end) : getChipRange(range as Exclude<RangeKey, 'custom'>).end;
 
   const summary = useMemo(() => (ready ? getDashboard(start, end) : null), [ready, start, end, getDashboard]);
-  const recent  = useMemo(() => (ready ? getRecentAll(10) : []), [ready, getRecentAll]); // << aquí ignora rango
+  const recent = useMemo(() => (ready ? getRecentAll(10) : []), [ready, getRecentAll]); // << hoy sigue ignorando rango (ver nota abajo)
 
   const onPull = async () => {
     setLoading(true);
@@ -105,6 +102,7 @@ export default function HomeScreen({ navigation }: any) {
   };
 
   return (
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#0f172a' }}>
     <DismissibleScrollView
       style={{ flex: 1, backgroundColor: '#0f172a' }}
       contentContainerStyle={{ padding: 16, paddingBottom: 28 }}
@@ -176,15 +174,15 @@ export default function HomeScreen({ navigation }: any) {
       {/* Tarjeta principal de balance */}
       <View style={styles.balanceCard}>
         <Text style={styles.balanceLabel}>Balance</Text>
-        <Text style={styles.balanceValue}>{money(summary?.balance ?? 0)}</Text>
+        <Text style={styles.balanceValue}>{format(summary?.balance ?? 0)}</Text>
         <View style={styles.row}>
           <View style={[styles.kpi, { backgroundColor: '#052e1a' }]}>
             <Text style={[styles.kpiLabel, { color: '#10b981' }]}>Ingresos</Text>
-            <Text style={[styles.kpiValue, { color: '#10b981' }]}>{money(summary?.income ?? 0)}</Text>
+            <Text style={[styles.kpiValue, { color: '#10b981' }]}>{format(summary?.income ?? 0)}</Text>
           </View>
           <View style={[styles.kpi, { backgroundColor: '#3a0a0a' }]}>
             <Text style={[styles.kpiLabel, { color: '#ef4444' }]}>Gastos</Text>
-            <Text style={[styles.kpiValue, { color: '#ef4444' }]}>{money(summary?.expense ?? 0)}</Text>
+            <Text style={[styles.kpiValue, { color: '#ef4444' }]}>{format(summary?.expense ?? 0)}</Text>
           </View>
         </View>
         <Text style={styles.rangeText}>{start} → {end}</Text>
@@ -206,7 +204,7 @@ export default function HomeScreen({ navigation }: any) {
               </View>
               <View style={styles.catRight}>
                 <Text style={styles.catCount}>{c.count} mov.</Text>
-                <Text style={styles.catTotal}>{money(c.total)}</Text>
+                <Text style={styles.catTotal}>{format(c.total)}</Text>
               </View>
             </View>
           ))}
@@ -222,11 +220,12 @@ export default function HomeScreen({ navigation }: any) {
       ) : (
         <View style={{ gap: 10 }}>
           {recent.map((t) => (
-            <TransactionItem key={t.id} tx={t} />
+            <TransactionItem key={t.id} tx={t} onPress={() => navigation.navigate('TransactionDetail', { id: t.id })} />
           ))}
         </View>
       )}
     </DismissibleScrollView>
+    </SafeAreaView>
   );
 }
 

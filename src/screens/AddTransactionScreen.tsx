@@ -1,3 +1,4 @@
+// src/screens/AddTransactionScreen.tsx
 import React, { useEffect, useMemo, useState } from 'react';
 import {
   View, Text, TextInput, StyleSheet, Pressable, Alert, Platform,
@@ -5,14 +6,14 @@ import {
 } from 'react-native';
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import { z } from 'zod';
-import { createTransaction } from '../services/transactions';
+import { TransactionsService } from '../services/transactions';
 import { getCategories } from '../services/categories';
 import { BackendTxType, Category, CreateTransactionDto, RecurrenceKind, Transaction } from '../types';
 import CategorySelectModal from '../components/CategorySelectModal';
 import DismissibleScrollView from '../components/DismissibleScrollView';
 import { useDataCache } from '../context/DataCacheContext';
 
-// ---------- VALIDACIÓN (igual que antes: fechas YYYY-MM-DD) ----------
+// ---------- VALIDACIÓN ----------
 const schema = z.object({
   type: z.enum(['ingreso', 'gasto']),
   amount: z.coerce.number().positive('El monto debe ser mayor a 0'),
@@ -21,12 +22,20 @@ const schema = z.object({
   note: z.string().optional(),
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Fecha inválida (YYYY-MM-DD)'),
   isRecurring: z.boolean(),
-  recurrence: z.enum(['', 'daily', 'weekly', 'biweekly', 'monthly']),
-  endDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Fecha fin inválida (YYYY-MM-DD)'),
-}).refine(
-  (v) => !v.isRecurring || (v.recurrence !== '' && v.endDate),
-  { message: 'Debes seleccionar recurrencia y fecha fin', path: ['recurrence'] }
-);
+  // ahora opcionales:
+  recurrence: z.enum(['daily', 'weekly', 'biweekly', 'monthly']).optional(),
+  endDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/,'Fecha fin inválida (YYYY-MM-DD)').optional(),
+}).superRefine((v, ctx) => {
+  // Si es recurrente → ambos requeridos
+  if (v.isRecurring) {
+    if (!v.recurrence) {
+      ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['recurrence'], message: 'Selecciona la recurrencia' });
+    }
+    if (!v.endDate) {
+      ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['endDate'], message: 'Selecciona la fecha fin' });
+    }
+  }
+});
 
 // ---------- HELPERS DE FECHA/HORA ----------
 function formatDateLocal(d: Date) {
@@ -42,7 +51,6 @@ function timeLabel(d: Date) {
 }
 /** Combina "YYYY-MM-DD" + hora/min de un Date y retorna ISO (UTC) */
 function toISOWithTime(dateYYYYMMDD: string, time: Date) {
-  // construye Date en zona local con la fecha del string y la hora del time
   const [y, m, d] = dateYYYYMMDD.split('-').map(Number);
   const local = new Date(y, (m - 1), d, time.getHours(), time.getMinutes(), 0, 0);
   return local.toISOString();
@@ -64,7 +72,7 @@ export default function AddTransactionScreen({ navigation }: any) {
 
   // ----- RECURRENCIA -----
   const [isRecurring, setIsRecurring] = useState(false);
-  const [recurrence, setRecurrence] = useState<RecurrenceKind>('');
+  const [recurrence, setRecurrence] = useState<RecurrenceKind>(''); // '' por defecto (no recurrente)
   const defaultEnd = useMemo(() => {
     const end = new Date(now);
     end.setFullYear(end.getFullYear() + 1);
@@ -114,7 +122,7 @@ export default function AddTransactionScreen({ navigation }: any) {
   // ----- PICKERS FECHA/HORA -----
   const openDatePicker = () => {
     if (Platform.OS === 'web') {
-      // @ts-ignore (prompt solo en web)
+      // @ts-ignore
       const v = typeof prompt !== 'undefined' ? prompt('Fecha (YYYY-MM-DD):', date) : null;
       if (v) setDate(v);
     } else {
@@ -126,42 +134,25 @@ export default function AddTransactionScreen({ navigation }: any) {
     if (d) setDate(formatDateLocal(d));
   };
 
-  const openTimePicker = () => {
-    if (Platform.OS === 'web') {
-      // en web, si no quieres prompt aquí, dejamos la hora actual
-      setShowTimePicker(true); // permite usar el picker web si lo soporta
-    } else {
-      setShowTimePicker(true);
-    }
-  };
+  const openTimePicker = () => setShowTimePicker(true);
   const onChangeTime = (_e: DateTimePickerEvent, d?: Date) => {
     setShowTimePicker(false);
     if (d) setTime(d);
   };
 
-  const openEndPicker = () => {
-    if (Platform.OS === 'web') {
-      // @ts-ignore
-      const v = typeof prompt !== 'undefined' ? prompt('Fecha fin (YYYY-MM-DD):', endDate) : null;
-      if (v) setEndDate(v);
-    } else {
-      setShowEndPicker(true);
-    }
-  };
+  const openEndPicker = () => setShowEndPicker(true);
   const onChangeEndDate = (_e: DateTimePickerEvent, d?: Date) => {
     setShowEndPicker(false);
     if (d) setEndDate(formatDateLocal(d));
   };
 
-  const openEndTimePicker = () => {
-    setShowEndTimePicker(true);
-  };
+  const openEndTimePicker = () => setShowEndTimePicker(true);
   const onChangeEndTime = (_e: DateTimePickerEvent, d?: Date) => {
     setShowEndTimePicker(false);
     if (d) setEndTime(d);
   };
 
-  const recurrenceOptions: { key: RecurrenceKind; label: string }[] = [
+  const recurrenceOptions: { key: Exclude<RecurrenceKind, ''>; label: string }[] = [
     { key: 'daily', label: 'Diario' },
     { key: 'weekly', label: 'Semanal' },
     { key: 'biweekly', label: 'Quincenal' },
@@ -170,7 +161,7 @@ export default function AddTransactionScreen({ navigation }: any) {
 
   const onSubmit = async () => {
     try {
-      // Validación (fechas siguen siendo YYYY-MM-DD, como antes)
+      // Validar: si no es recurrente no exigimos recurrence/endDate
       const parsed = schema.parse({
         type,
         amount,
@@ -179,17 +170,18 @@ export default function AddTransactionScreen({ navigation }: any) {
         note: note?.trim() || undefined,
         date,
         isRecurring,
-        recurrence: isRecurring ? recurrence : '',
-        endDate: isRecurring ? endDate : date,
+        recurrence: isRecurring ? (recurrence || undefined) : undefined,
+        endDate: isRecurring ? endDate : undefined,
       });
 
-      // NUEVO: convertir a ISO con hora real
+      // Convertir a ISO con hora real
       const dateISO = toISOWithTime(parsed.date, time);
-      const endDateISO = toISOWithTime(
-        isRecurring ? parsed.endDate : parsed.date,
-        isRecurring ? endTime : time
-      );
+      // endDate solo si es recurrente; si no, la omitimos por completo
+      const endDateISO = parsed.isRecurring
+        ? toISOWithTime(parsed.endDate!, endTime)
+        : undefined;
 
+      // Construir payload sin campos extra cuando no es recurrente
       const payload: CreateTransactionDto = {
         type: parsed.type,
         amount: Number(parsed.amount),
@@ -197,12 +189,11 @@ export default function AddTransactionScreen({ navigation }: any) {
         paymentMethod: parsed.paymentMethod,
         note: parsed.note,
         isRecurring: parsed.isRecurring,
-        recurrence: parsed.recurrence,
-        date: dateISO,        // <-- con hora real
-        endDate: endDateISO,  // <-- con hora real (o igual que date si no recurrente)
+        date: dateISO,
+        ...(parsed.isRecurring ? { recurrence: parsed.recurrence!, endDate: endDateISO! } : {}),
       };
 
-      const serverTx = await createTransaction(payload);
+      const serverTx = await TransactionsService.create(payload);
 
       // Enriquecer con nombre de categoría (UI-friendly)
       const txForCache: Transaction = {
@@ -210,7 +201,6 @@ export default function AddTransactionScreen({ navigation }: any) {
         category: selectedCategoryName || 'Sin categoría',
       };
 
-      // Write-through al cache local
       await addLocalTx(txForCache);
 
       Alert.alert('Éxito', 'Transacción creada');
@@ -226,7 +216,7 @@ export default function AddTransactionScreen({ navigation }: any) {
     }
   };
 
-  const RecurrenceChip = ({ rk, label }: { rk: RecurrenceKind; label: string }) => (
+  const RecurrenceChip = ({ rk, label }: { rk: Exclude<RecurrenceKind, ''>; label: string }) => (
     <Pressable
       onPress={() => setRecurrence(rk)}
       style={[styles.chip, recurrence === rk && styles.chipActive]}
@@ -369,22 +359,17 @@ export default function AddTransactionScreen({ navigation }: any) {
         </Pressable>
 
         {/* Modal categorías */}
-       <CategorySelectModal
-  visible={showCatModal}
-  onClose={() => setShowCatModal(false)}
-  categories={filteredCategories}           // <- antes: categoriesFilteredByType
-  onSelect={(cat) => {                      // <- antes: setSelectedCategory
-    setSelectedCategoryId(cat.id);
-  }}
-  categoryType={type}                       // <- antes: currentType
-  onCreated={(newCat) => {
-    // agrega nueva categoría a la lista local
-    setCategories(prev => [newCat, ...prev]);
-    // selección inmediata (por si el modal no alcanzara a llamar onSelect)
-    setSelectedCategoryId(newCat.id);
-  }}
-/>
-
+        <CategorySelectModal
+          visible={showCatModal}
+          onClose={() => setShowCatModal(false)}
+          categories={filteredCategories}
+          onSelect={(cat) => { setSelectedCategoryId(cat.id); }}
+          categoryType={type}
+          onCreated={(newCat) => {
+            setCategories(prev => [newCat, ...prev]);
+            setSelectedCategoryId(newCat.id);
+          }}
+        />
       </DismissibleScrollView>
     </TouchableWithoutFeedback>
   );

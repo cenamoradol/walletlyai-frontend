@@ -3,7 +3,8 @@ import React, {
 } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import { persist } from '../utils/persist';
-import { getTransactions } from '../services/transactions';
+// ⬇️ usamos el servicio unificado que ya expusiste
+import { TransactionsService } from '../services/transactions';
 import { getCategories } from '../services/categories';
 import { ApiTransaction, Category, Transaction } from '../types';
 import { useAuth } from '../context/AuthContext';
@@ -200,15 +201,18 @@ export function DataCacheProvider({ children }: { children: React.ReactNode }) {
       const end = new Date();
       const start = new Date();
       start.setDate(end.getDate() - DAYS_BACK);
-      const startISO = start.toISOString().slice(0, 10); // YYYY-MM-DD (LOCAL equivalente al construir Date)
+      const startISO = start.toISOString().slice(0, 10); // YYYY-MM-DD
       const endISO = end.toISOString().slice(0, 10);
 
       const [cats, apiTxs] = await Promise.all([
         getCategories(),
-        getTransactions({ start: startISO, end: endISO }),
+        // ⬇️ BACKEND espera from/to, no start/end
+        TransactionsService.getList({ from: startISO, to: endISO }),
       ]);
 
-      const normalized = normalizeTransactions(apiTxs as unknown as ApiTransaction[], cats);
+      const list = Array.isArray(apiTxs) ? apiTxs : apiTxs.items;
+      const normalized = normalizeTransactions(list as unknown as ApiTransaction[], cats);
+
       setTxs(normalized);
       const m: Meta = { lastSyncISO: new Date().toISOString(), windowStart: startISO };
       setMeta(m);
@@ -238,10 +242,12 @@ export function DataCacheProvider({ children }: { children: React.ReactNode }) {
 
     const [cats, apiTxs] = await Promise.all([
       getCategories(),
-      getTransactions({ start: startISO, end: endISO }),
+      // ⬇️ BACKEND espera from/to, no start/end
+      TransactionsService.getList({ from: startISO, to: endISO }),
     ]);
 
-    const normalized = normalizeTransactions(apiTxs as unknown as ApiTransaction[], cats);
+    const list = Array.isArray(apiTxs) ? apiTxs : apiTxs.items;
+    const normalized = normalizeTransactions(list as unknown as ApiTransaction[], cats);
     setTxs(normalized);
 
     const m: Meta = { lastSyncISO: new Date().toISOString(), windowStart: startISO };
@@ -264,19 +270,26 @@ export function DataCacheProvider({ children }: { children: React.ReactNode }) {
     return deriveDashboard(txs, start, end);
   }, [txs]);
 
+  const recentSort = (a: Transaction, b: Transaction) => {
+    const da = +new Date(a.date);
+    const db = +new Date(b.date);
+    if (db !== da) return db - da;
+    // desempate estable: createdAt desc, luego id desc
+    const ca = a.createdAt ? +new Date(a.createdAt) : 0;
+    const cb = b.createdAt ? +new Date(b.createdAt) : 0;
+    if (cb !== ca) return cb - ca;
+    return (b.id || 0) - (a.id || 0);
+  };
+
   const getRecent = useCallback((start: string, end: string, limit = 10): Transaction[] => {
-    // Recientes POR RANGO (LOCAL → UTC window)
     return txs
       .filter(t => inRangeLocalWindow(t.date, start, end))
-      .sort((a, b) => +new Date(b.date) - +new Date(a.date))
+      .sort(recentSort)
       .slice(0, limit);
   }, [txs]);
 
   const getRecentAll = useCallback((limit = 10): Transaction[] => {
-    // Recientes globales
-    return [...txs]
-      .sort((a, b) => +new Date(b.date) - +new Date(a.date))
-      .slice(0, limit);
+    return [...txs].sort(recentSort).slice(0, limit);
   }, [txs]);
 
   const value = useMemo<Ctx>(() => ({

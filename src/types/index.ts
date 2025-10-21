@@ -33,13 +33,13 @@ export type RecurrenceKind = '' | 'daily' | 'weekly' | 'biweekly' | 'monthly';
 export interface CreateTransactionDto {
   type: BackendTxType;
   amount: number;
-  date: string;               // ISO Z
   categoryId: number;
   paymentMethod: string;
   note?: string;
+  date: string;          // ISO
   isRecurring: boolean;
-  recurrence: RecurrenceKind; // '' si no es recurrente
-  endDate: string;            // ISO Z
+  recurrence?: Exclude<RecurrenceKind, ''>; // <- opcional si no recurrente
+  endDate?: string;      // ISO opcional si no recurrente
 }
 
 // Auth

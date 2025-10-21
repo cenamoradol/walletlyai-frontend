@@ -1,53 +1,61 @@
+// src/navigation/MainTabs.tsx
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Ionicons } from '@expo/vector-icons';
+
+// Screens
 import HomeScreen from '../screens/HomeScreen';
 import TransactionsScreen from '../screens/TransactionsScreen';
-import { Pressable, Text } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { DrawerActions, useNavigation } from '@react-navigation/native';
+import BudgetsScreen from '../screens/BudgetsScreen';
+import ProfileScreen from '../screens/ProfileScreen';
+import SettingsScreen from '../screens/SettingsScreen';
 
-const Tab = createBottomTabNavigator();
+export type MainTabsParamList = {
+  Home: undefined;
+  Transactions: undefined;
+  Budgets: undefined;
+  Profile: undefined;
+  Settings: undefined;
+};
 
-function HeaderMenuButton() {
-  const navigation = useNavigation();
-  return (
-    <Pressable
-      onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
-      style={{ paddingHorizontal: 12 }}
-    >
-      <Ionicons name="menu" size={22} color="#fff" />
-    </Pressable>
-  );
-}
+const Tab = createBottomTabNavigator<MainTabsParamList>();
 
 export default function MainTabs() {
   return (
     <Tab.Navigator
-      screenOptions={{
-        headerStyle: { backgroundColor: '#0f172a' },
-        headerTintColor: '#fff',
-        tabBarStyle: { backgroundColor: '#0f172a', borderTopColor: '#1f2937' },
-        tabBarActiveTintColor: '#fff',
-        tabBarInactiveTintColor: '#94a3b8',
-        headerLeft: () => <HeaderMenuButton />,
-      }}
+      screenOptions={({ route }) => ({
+        headerShown: false,
+        tabBarShowLabel: true,
+        tabBarIcon: ({ focused, size }) => {
+          let icon: keyof typeof Ionicons.glyphMap;
+          switch (route.name) {
+            case 'Home':
+              icon = focused ? 'home' : 'home-outline';
+              break;
+            case 'Transactions':
+              icon = focused ? 'list' : 'list-outline';
+              break;
+            case 'Budgets':
+              icon = focused ? 'pie-chart' : 'pie-chart-outline';
+              break;
+            case 'Profile':
+              icon = focused ? 'person' : 'person-outline';
+              break;
+            case 'Settings':
+              icon = focused ? 'settings' : 'settings-outline';
+              break;
+            default:
+              icon = 'ellipse';
+          }
+          return <Ionicons name={icon} size={size} />;
+        },
+      })}
     >
-      <Tab.Screen
-        name="Dashboard"
-        component={HomeScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => <Ionicons name="speedometer" size={size} color={color} />,
-          title: 'Dashboard',
-        }}
-      />
-      <Tab.Screen
-        name="Transactions"
-        component={TransactionsScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => <Ionicons name="list" size={size} color={color} />,
-          title: 'Transacciones',
-        }}
-      />
+      <Tab.Screen name="Home" component={HomeScreen} options={{ title: 'Inicio' }} />
+      <Tab.Screen name="Transactions" component={TransactionsScreen} options={{ title: 'Transacciones' }} />
+      <Tab.Screen name="Budgets" component={BudgetsScreen} options={{ title: 'Presupuestos' }} />
+      <Tab.Screen name="Profile" component={ProfileScreen} options={{ title: 'Perfil' }} />
+      <Tab.Screen name="Settings" component={SettingsScreen} options={{ title: 'Ajustes' }} />
     </Tab.Navigator>
   );
 }

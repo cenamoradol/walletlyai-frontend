@@ -1,54 +1,61 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { Transaction } from '../types';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { useMoney } from '../utils/money';
+import type { Transaction as TxType } from '../types';
 
-// Formato de moneda consistente
-function money(n: number) {
-  try {
-    return new Intl.NumberFormat('es-HN', {
-      style: 'currency',
-      currency: 'HNL',
-      maximumFractionDigits: 2,
-    }).format(n);
-  } catch {
-    return `$${n.toFixed(2)}`;
-  }
-}
+type Props = {
+  tx: TxType & {
+    // Compatibilidad flexible con tu shape actual
+    hasTime?: boolean;
+    category?: string | { name?: string };
+  };
+  onPress?: () => void;
+};
 
-// Fecha y hora: YYYY-MM-DD · HH:mm (hora local del dispositivo)
-function formatDateTime(iso: string) {
+// YYYY-MM-DD  o  YYYY-MM-DD · HH:mm (según hasTime)
+function formatDateLine(iso: string, hasTime?: boolean) {
   try {
     const d = new Date(iso);
     const y = d.getFullYear();
     const m = String(d.getMonth() + 1).padStart(2, '0');
     const day = String(d.getDate()).padStart(2, '0');
-    const hh = String(d.getHours()).padStart(2, '0');
-    const mm = String(d.getMinutes()).padStart(2, '0');
-    return `${y}-${m}-${day} · ${hh}:${mm}`;
+    if (hasTime) {
+      const hh = String(d.getHours()).padStart(2, '0');
+      const mm = String(d.getMinutes()).padStart(2, '0');
+      return `${y}-${m}-${day} · ${hh}:${mm}`;
+    }
+    return `${y}-${m}-${day}`;
   } catch {
     return iso;
   }
 }
 
-export default function TransactionItem({ tx }: { tx: Transaction }) {
+function getCategoryName(cat: Props['tx']['category']) {
+  if (!cat) return 'Sin categoría';
+  if (typeof cat === 'string') return cat || 'Sin categoría';
+  return cat.name || 'Sin categoría';
+}
+
+export default function TransactionItem({ tx, onPress }: Props) {
+  const { format } = useMoney();
   const isIncome = tx.type === 'ingreso';
   const color = isIncome ? '#10b981' : '#ef4444';
 
   return (
-    <View style={styles.card}>
+    <Pressable onPress={onPress} style={({ pressed }) => [styles.card, pressed && { opacity: 0.9 }]}>
       {/* Línea 1: categoría/fecha-hora a la izquierda, monto a la derecha */}
       <View style={styles.row}>
         <View style={styles.left}>
           <View style={[styles.dot, { backgroundColor: isIncome ? '#065f46' : '#7f1d1d' }]} />
           <View style={{ flexShrink: 1 }}>
             <Text style={styles.category} numberOfLines={1}>
-              {tx.category || 'Sin categoría'}
+              {getCategoryName(tx.category)}
             </Text>
-            <Text style={styles.date}>{formatDateTime(tx.date)}</Text>
+            <Text style={styles.date}>{formatDateLine(tx.date, tx.hasTime)}</Text>
           </View>
         </View>
 
-        <Text style={[styles.amount, { color }]}>{money(tx.amount)}</Text>
+        <Text style={[styles.amount, { color }]}>{format(tx.amount)}</Text>
       </View>
 
       {/* Línea 2: paymentMethod */}
@@ -68,7 +75,7 @@ export default function TransactionItem({ tx }: { tx: Transaction }) {
           </Text>
         </View>
       )}
-    </View>
+    </Pressable>
   );
 }
 
@@ -91,9 +98,7 @@ const styles = StyleSheet.create({
   dot: { width: 10, height: 10, borderRadius: 999 },
   category: { color: 'white', fontWeight: '700', maxWidth: 220 },
   date: { color: '#94a3b8', fontSize: 12, marginTop: 2 },
-
   amount: { fontWeight: '800', fontSize: 16 },
-
   metaRow: {
     flexDirection: 'row',
     gap: 6,
