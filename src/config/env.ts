@@ -5,7 +5,7 @@ export const ENV = {
  
   BASE_URL: Platform.select({
     web: 'http://localhost:3000',      // Expo Web
-    ios: 'http://192.168.1.9:3000',      // iOS simulador
+    ios: 'https://walletlyai-backend.onrender.com',      // iOS simulador
     android: 'http://192.168.1.9:3000',   // Android emulador
     default: 'https://walletlyai-backend.onrender.com',
   }) as string,
