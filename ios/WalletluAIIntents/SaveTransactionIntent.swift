@@ -2,8 +2,8 @@ import AppIntents
 import Foundation
 
 fileprivate enum Config {
-    // Cambia por tu backend; mismo host/https que usas en ENV.BASE_URL
-    static let baseURL = "https://walletlyai-backend.onrender.com"
+    static let baseURL = "https://walletlyai-backend.onrender.com"   // <- cámbialo
+    static let appGroupId = "group.walletlyai"  // <- el mismo que en Capabilities
 }
 
 struct SaveTransactionIntent: AppIntent {
@@ -13,7 +13,6 @@ struct SaveTransactionIntent: AppIntent {
     @Parameter(title: "Texto del SMS")
     var text: String
 
-    // No abras la app al ejecutar el atajo
     static var openAppWhenRun: Bool = false
 
     func perform() async throws -> some IntentResult {
@@ -25,14 +24,25 @@ struct SaveTransactionIntent: AppIntent {
         req.httpMethod = "POST"
         req.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
-        // Versión SIN token (Personal Team no permite App Groups fácilmente).
-        // Cuando actives App Groups, agregaremos Authorization aquí.
+        // 1) Leer token del App Group
+        let token = UserDefaults(suiteName: Config.appGroupId)?
+            .dictionary(forKey: "auth")?["token"] as? String
+
+        // 2) Agregar Authorization si hay token
+        if let token, !token.isEmpty {
+            // si guardas el token sin prefijo:
+            req.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+            // si ya lo guardaste con "Bearer ..." quita el prefijo de arriba y usa tal cual:
+            // req.setValue(token, forHTTPHeaderField: "Authorization")
+        }
 
         let payload: [String: Any] = ["text": text]
         req.httpBody = try JSONSerialization.data(withJSONObject: payload, options: [])
 
         let (_, resp) = try await URLSession.shared.data(for: req)
         guard let http = resp as? HTTPURLResponse, 200..<300 ~= http.statusCode else {
+            // (Opcional) imprime el status para depurar en Console.app
+            // os_log("save-transaction status: %d", (resp as? HTTPURLResponse)?.statusCode ?? -1)
             throw NSError(domain: "WalletIA", code: -2, userInfo: [NSLocalizedDescriptionKey: "Respuesta HTTP no válida"])
         }
 

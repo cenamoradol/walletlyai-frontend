@@ -3,6 +3,7 @@ import { Alert } from 'react-native';
 import * as SecureStore from 'expo-secure-store'; // si no lo instalaste, cambia por AsyncStorage
 import { login as loginApi, register as registerApi } from '../services/auth';
 import { api, setAuthToken, setOnUnauthorized } from '../api/client';
+import { saveAuthTokenToAppGroup } from '../auth/saveToken';
 
 type AuthContextType = {
   token: string | null;
@@ -54,6 +55,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setToken(access_token);
     setAuthToken(access_token);
     await saveToken(access_token);
+    await saveAuthTokenToAppGroup(access_token);
   };
 
   const register = async (name: string, email: string, password: string) => {
