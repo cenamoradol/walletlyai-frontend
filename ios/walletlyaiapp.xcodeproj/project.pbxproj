@@ -8,33 +8,33 @@
 
 /* Begin PBXBuildFile section */
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		1F482C8362985B0D95479CF8 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE02BCA34155A7019D4476D /* ExpoModulesProvider.swift */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
-		5A29C3AB6FBD30BAA8FBCD13 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = FA55258E8E845D83D8E4A245 /* PrivacyInfo.xcprivacy */; };
-		9CD3F8FE625E0D773D1DC2A0 /* libPods-walletlyaiapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04899C66FA4537DC94B808B1 /* libPods-walletlyaiapp.a */; };
-		A7356D532EA7461100109731 /* WalletlyAIIntents.appex in Embed ExtensionKit Extensions */ = {isa = PBXBuildFile; fileRef = A7356D4A2EA7461100109731 /* WalletlyAIIntents.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		589EB7C68321530058210B52 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 8EC2048B10C43D594801545C /* PrivacyInfo.xcprivacy */; };
+		A7A273342EA89C120046FFDD /* WalletluAIIntents.appex in Embed ExtensionKit Extensions */ = {isa = PBXBuildFile; fileRef = A7A2732B2EA89C120046FFDD /* WalletluAIIntents.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
-		D13AA78D75F38CB42ECE876B /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC8B8E12D2676A52EF19BC2 /* ExpoModulesProvider.swift */; };
 		F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11748412D0307B40044C1D9 /* AppDelegate.swift */; };
+		FAF6072BE29337DB05D2414B /* libPods-walletlyaiapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AF3BBE3FDEB2BE6428EB9255 /* libPods-walletlyaiapp.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		A7356D512EA7461100109731 /* PBXContainerItemProxy */ = {
+		A7A273322EA89C120046FFDD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = A7356D492EA7461100109731;
-			remoteInfo = WalletlyAIIntents;
+			remoteGlobalIDString = A7A2732A2EA89C120046FFDD;
+			remoteInfo = WalletluAIIntents;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		A7356D542EA7461100109731 /* Embed ExtensionKit Extensions */ = {
+		A7A273352EA89C120046FFDD /* Embed ExtensionKit Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "$(EXTENSIONS_FOLDER_PATH)";
 			dstSubfolderSpec = 16;
 			files = (
-				A7356D532EA7461100109731 /* WalletlyAIIntents.appex in Embed ExtensionKit Extensions */,
+				A7A273342EA89C120046FFDD /* WalletluAIIntents.appex in Embed ExtensionKit Extensions */,
 			);
 			name = "Embed ExtensionKit Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -42,34 +42,34 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		04899C66FA4537DC94B808B1 /* libPods-walletlyaiapp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-walletlyaiapp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07F961A680F5B00A75B9A /* walletlyaiapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = walletlyaiapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = walletlyaiapp/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = walletlyaiapp/Info.plist; sourceTree = "<group>"; };
-		30ADB345FF82BD0AF7662648 /* Pods-walletlyaiapp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-walletlyaiapp.release.xcconfig"; path = "Target Support Files/Pods-walletlyaiapp/Pods-walletlyaiapp.release.xcconfig"; sourceTree = "<group>"; };
-		6DC8B8E12D2676A52EF19BC2 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-walletlyaiapp/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
-		9D96F7357BEBC01802646129 /* Pods-walletlyaiapp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-walletlyaiapp.debug.xcconfig"; path = "Target Support Files/Pods-walletlyaiapp/Pods-walletlyaiapp.debug.xcconfig"; sourceTree = "<group>"; };
-		A7356D4A2EA7461100109731 /* WalletlyAIIntents.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.extensionkit-extension"; includeInIndex = 0; path = WalletlyAIIntents.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E5A46B7FF031209A6A19C08 /* Pods-walletlyaiapp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-walletlyaiapp.debug.xcconfig"; path = "Target Support Files/Pods-walletlyaiapp/Pods-walletlyaiapp.debug.xcconfig"; sourceTree = "<group>"; };
+		8EC2048B10C43D594801545C /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = walletlyaiapp/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		99CDC25C8205511AF9866E5D /* Pods-walletlyaiapp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-walletlyaiapp.release.xcconfig"; path = "Target Support Files/Pods-walletlyaiapp/Pods-walletlyaiapp.release.xcconfig"; sourceTree = "<group>"; };
+		A7A2732B2EA89C120046FFDD /* WalletluAIIntents.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.extensionkit-extension"; includeInIndex = 0; path = WalletluAIIntents.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = walletlyaiapp/SplashScreen.storyboard; sourceTree = "<group>"; };
+		AF3BBE3FDEB2BE6428EB9255 /* libPods-walletlyaiapp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-walletlyaiapp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
+		BCE02BCA34155A7019D4476D /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-walletlyaiapp/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F11748412D0307B40044C1D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = walletlyaiapp/AppDelegate.swift; sourceTree = "<group>"; };
 		F11748442D0722820044C1D9 /* walletlyaiapp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "walletlyaiapp-Bridging-Header.h"; path = "walletlyaiapp/walletlyaiapp-Bridging-Header.h"; sourceTree = "<group>"; };
-		FA55258E8E845D83D8E4A245 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = walletlyaiapp/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		A7356D572EA7461100109731 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+		A7A273382EA89C120046FFDD /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = A7356D492EA7461100109731 /* WalletlyAIIntents */;
+			target = A7A2732A2EA89C120046FFDD /* WalletluAIIntents */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		A7356D4B2EA7461100109731 /* WalletlyAIIntents */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (A7356D572EA7461100109731 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = WalletlyAIIntents; sourceTree = "<group>"; };
+		A7A2732C2EA89C120046FFDD /* WalletluAIIntents */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (A7A273382EA89C120046FFDD /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = WalletluAIIntents; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,11 +77,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9CD3F8FE625E0D773D1DC2A0 /* libPods-walletlyaiapp.a in Frameworks */,
+				FAF6072BE29337DB05D2414B /* libPods-walletlyaiapp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A7356D472EA7461100109731 /* Frameworks */ = {
+		A7A273282EA89C120046FFDD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -91,14 +91,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		09CAA94284C1010C64013E5B /* ExpoModulesProviders */ = {
-			isa = PBXGroup;
-			children = (
-				E9457E6009F4D54A8981A977 /* walletlyaiapp */,
-			);
-			name = ExpoModulesProviders;
-			sourceTree = "<group>";
-		};
 		13B07FAE1A68108700A75B9A /* walletlyaiapp */ = {
 			isa = PBXGroup;
 			children = (
@@ -108,7 +100,7 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
-				FA55258E8E845D83D8E4A245 /* PrivacyInfo.xcprivacy */,
+				8EC2048B10C43D594801545C /* PrivacyInfo.xcprivacy */,
 			);
 			name = walletlyaiapp;
 			sourceTree = "<group>";
@@ -117,18 +109,9 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				04899C66FA4537DC94B808B1 /* libPods-walletlyaiapp.a */,
+				AF3BBE3FDEB2BE6428EB9255 /* libPods-walletlyaiapp.a */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		34B2244A1EAA03732B923EF5 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				9D96F7357BEBC01802646129 /* Pods-walletlyaiapp.debug.xcconfig */,
-				30ADB345FF82BD0AF7662648 /* Pods-walletlyaiapp.release.xcconfig */,
-			);
-			path = Pods;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -143,11 +126,11 @@
 			children = (
 				13B07FAE1A68108700A75B9A /* walletlyaiapp */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
-				A7356D4B2EA7461100109731 /* WalletlyAIIntents */,
+				A7A2732C2EA89C120046FFDD /* WalletluAIIntents */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-				34B2244A1EAA03732B923EF5 /* Pods */,
-				09CAA94284C1010C64013E5B /* ExpoModulesProviders */,
+				DB79ADD578CC74768E58FB5A /* Pods */,
+				9C87EDCF6E0E2911E9953189 /* ExpoModulesProviders */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -158,9 +141,17 @@
 			isa = PBXGroup;
 			children = (
 				13B07F961A680F5B00A75B9A /* walletlyaiapp.app */,
-				A7356D4A2EA7461100109731 /* WalletlyAIIntents.appex */,
+				A7A2732B2EA89C120046FFDD /* WalletluAIIntents.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		9C87EDCF6E0E2911E9953189 /* ExpoModulesProviders */ = {
+			isa = PBXGroup;
+			children = (
+				EDBF8DED914D8677DEE5A34E /* walletlyaiapp */,
+			);
+			name = ExpoModulesProviders;
 			sourceTree = "<group>";
 		};
 		BB2F792B24A3F905000567C9 /* Supporting */ = {
@@ -172,10 +163,19 @@
 			path = walletlyaiapp/Supporting;
 			sourceTree = "<group>";
 		};
-		E9457E6009F4D54A8981A977 /* walletlyaiapp */ = {
+		DB79ADD578CC74768E58FB5A /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				6DC8B8E12D2676A52EF19BC2 /* ExpoModulesProvider.swift */,
+				7E5A46B7FF031209A6A19C08 /* Pods-walletlyaiapp.debug.xcconfig */,
+				99CDC25C8205511AF9866E5D /* Pods-walletlyaiapp.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		EDBF8DED914D8677DEE5A34E /* walletlyaiapp */ = {
+			isa = PBXGroup;
+			children = (
+				BCE02BCA34155A7019D4476D /* ExpoModulesProvider.swift */,
 			);
 			name = walletlyaiapp;
 			sourceTree = "<group>";
@@ -188,45 +188,45 @@
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "walletlyaiapp" */;
 			buildPhases = (
 				08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */,
-				2B19C2B6B2F7B236449D707D /* [Expo] Configure project */,
+				5A5F2DFC99E5467CD875990E /* [Expo] Configure project */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
-				0201F296CF27FF3D9AF6A2CA /* [CP] Embed Pods Frameworks */,
-				A7356D542EA7461100109731 /* Embed ExtensionKit Extensions */,
+				B9BB674226FE674236452882 /* [CP] Embed Pods Frameworks */,
+				A7A273352EA89C120046FFDD /* Embed ExtensionKit Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				A7356D522EA7461100109731 /* PBXTargetDependency */,
+				A7A273332EA89C120046FFDD /* PBXTargetDependency */,
 			);
 			name = walletlyaiapp;
 			productName = walletlyaiapp;
 			productReference = 13B07F961A680F5B00A75B9A /* walletlyaiapp.app */;
 			productType = "com.apple.product-type.application";
 		};
-		A7356D492EA7461100109731 /* WalletlyAIIntents */ = {
+		A7A2732A2EA89C120046FFDD /* WalletluAIIntents */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A7356D582EA7461100109731 /* Build configuration list for PBXNativeTarget "WalletlyAIIntents" */;
+			buildConfigurationList = A7A273392EA89C120046FFDD /* Build configuration list for PBXNativeTarget "WalletluAIIntents" */;
 			buildPhases = (
-				A7356D462EA7461100109731 /* Sources */,
-				A7356D472EA7461100109731 /* Frameworks */,
-				A7356D482EA7461100109731 /* Resources */,
+				A7A273272EA89C120046FFDD /* Sources */,
+				A7A273282EA89C120046FFDD /* Frameworks */,
+				A7A273292EA89C120046FFDD /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				A7356D4B2EA7461100109731 /* WalletlyAIIntents */,
+				A7A2732C2EA89C120046FFDD /* WalletluAIIntents */,
 			);
-			name = WalletlyAIIntents;
+			name = WalletluAIIntents;
 			packageProductDependencies = (
 			);
-			productName = WalletlyAIIntents;
-			productReference = A7356D4A2EA7461100109731 /* WalletlyAIIntents.appex */;
+			productName = WalletluAIIntents;
+			productReference = A7A2732B2EA89C120046FFDD /* WalletluAIIntents.appex */;
 			productType = "com.apple.product-type.extensionkit-extension";
 		};
 /* End PBXNativeTarget section */
@@ -241,7 +241,7 @@
 					13B07F861A680F5B00A75B9A = {
 						LastSwiftMigration = 1250;
 					};
-					A7356D492EA7461100109731 = {
+					A7A2732A2EA89C120046FFDD = {
 						CreatedOnToolsVersion = 26.0.1;
 					};
 				};
@@ -260,7 +260,7 @@
 			projectRoot = "";
 			targets = (
 				13B07F861A680F5B00A75B9A /* walletlyaiapp */,
-				A7356D492EA7461100109731 /* WalletlyAIIntents */,
+				A7A2732A2EA89C120046FFDD /* WalletluAIIntents */,
 			);
 		};
 /* End PBXProject section */
@@ -273,11 +273,11 @@
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
-				5A29C3AB6FBD30BAA8FBCD13 /* PrivacyInfo.xcprivacy in Resources */,
+				589EB7C68321530058210B52 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A7356D482EA7461100109731 /* Resources */ = {
+		A7A273292EA89C120046FFDD /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -304,28 +304,6 @@
 			shellPath = /bin/sh;
 			shellScript = "if [[ -f \"$PODS_ROOT/../.xcode.env\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env\"\nfi\nif [[ -f \"$PODS_ROOT/../.xcode.env.local\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env.local\"\nfi\n\n# The project root by default is one level up from the ios directory\nexport PROJECT_ROOT=\"$PROJECT_DIR\"/..\n\nif [[ \"$CONFIGURATION\" = *Debug* ]]; then\n  export SKIP_BUNDLING=1\nfi\nif [[ -z \"$ENTRY_FILE\" ]]; then\n  # Set the entry JS file using the bundler's entry resolution.\n  export ENTRY_FILE=\"$(\"$NODE_BINARY\" -e \"require('expo/scripts/resolveAppEntry')\" \"$PROJECT_ROOT\" ios absolute | tail -n 1)\"\nfi\n\nif [[ -z \"$CLI_PATH\" ]]; then\n  # Use Expo CLI\n  export CLI_PATH=\"$(\"$NODE_BINARY\" --print \"require.resolve('@expo/cli', { paths: [require.resolve('expo/package.json')] })\")\"\nfi\nif [[ -z \"$BUNDLE_COMMAND\" ]]; then\n  # Default Expo CLI command for bundling\n  export BUNDLE_COMMAND=\"export:embed\"\nfi\n\n# Source .xcode.env.updates if it exists to allow\n# SKIP_BUNDLING to be unset if needed\nif [[ -f \"$PODS_ROOT/../.xcode.env.updates\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env.updates\"\nfi\n# Source local changes to allow overrides\n# if needed\nif [[ -f \"$PODS_ROOT/../.xcode.env.local\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env.local\"\nfi\n\n`\"$NODE_BINARY\" --print \"require('path').dirname(require.resolve('react-native/package.json')) + '/scripts/react-native-xcode.sh'\"`\n\n";
 		};
-		0201F296CF27FF3D9AF6A2CA /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-walletlyaiapp/Pods-walletlyaiapp-frameworks.sh",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/React-Core-prebuilt/React.framework/React",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ReactNativeDependencies/ReactNativeDependencies.framework/ReactNativeDependencies",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/Pre-built/hermes.framework/hermes",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/React.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactNativeDependencies.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-walletlyaiapp/Pods-walletlyaiapp-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -348,7 +326,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		2B19C2B6B2F7B236449D707D /* [Expo] Configure project */ = {
+		5A5F2DFC99E5467CD875990E /* [Expo] Configure project */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -379,8 +357,11 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-walletlyaiapp/Pods-walletlyaiapp-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/EXApplication/ExpoApplication_privacy.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/EXConstants/EXConstants.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/EXConstants/ExpoConstants_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/EXNotifications/ExpoNotifications_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/ExpoDevice/ExpoDevice_privacy.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/ExpoFileSystem/ExpoFileSystem_privacy.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/RNCAsyncStorage/RNCAsyncStorage_resources.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/React-Core_privacy.bundle",
@@ -390,8 +371,11 @@
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ExpoApplication_privacy.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EXConstants.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ExpoConstants_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ExpoNotifications_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ExpoDevice_privacy.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ExpoFileSystem_privacy.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RNCAsyncStorage_resources.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/React-Core_privacy.bundle",
@@ -404,6 +388,28 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-walletlyaiapp/Pods-walletlyaiapp-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		B9BB674226FE674236452882 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-walletlyaiapp/Pods-walletlyaiapp-frameworks.sh",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/React-Core-prebuilt/React.framework/React",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ReactNativeDependencies/ReactNativeDependencies.framework/ReactNativeDependencies",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/Pre-built/hermes.framework/hermes",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/React.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactNativeDependencies.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-walletlyaiapp/Pods-walletlyaiapp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -412,11 +418,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */,
-				D13AA78D75F38CB42ECE876B /* ExpoModulesProvider.swift in Sources */,
+				1F482C8362985B0D95479CF8 /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A7356D462EA7461100109731 /* Sources */ = {
+		A7A273272EA89C120046FFDD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -426,17 +432,17 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		A7356D522EA7461100109731 /* PBXTargetDependency */ = {
+		A7A273332EA89C120046FFDD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A7356D492EA7461100109731 /* WalletlyAIIntents */;
-			targetProxy = A7356D512EA7461100109731 /* PBXContainerItemProxy */;
+			target = A7A2732A2EA89C120046FFDD /* WalletluAIIntents */;
+			targetProxy = A7A273322EA89C120046FFDD /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9D96F7357BEBC01802646129 /* Pods-walletlyaiapp.debug.xcconfig */;
+			baseConfigurationReference = 7E5A46B7FF031209A6A19C08 /* Pods-walletlyaiapp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -449,6 +455,8 @@
 					"FB_SONARKIT_ENABLED=1",
 				);
 				INFOPLIST_FILE = walletlyaiapp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Walletly;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -473,7 +481,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 30ADB345FF82BD0AF7662648 /* Pods-walletlyaiapp.release.xcconfig */;
+			baseConfigurationReference = 99CDC25C8205511AF9866E5D /* Pods-walletlyaiapp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -481,6 +489,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = XC292ZHS3K;
 				INFOPLIST_FILE = walletlyaiapp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Walletly;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -620,7 +630,7 @@
 			};
 			name = Release;
 		};
-		A7356D552EA7461100109731 /* Debug */ = {
+		A7A273362EA89C120046FFDD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -638,8 +648,8 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = WalletlyAIIntents/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = WalletlyAIIntents;
+				INFOPLIST_FILE = WalletluAIIntents/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = WalletluAIIntents;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -651,7 +661,7 @@
 				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.tuorg.walletlyaiapp.WalletlyAIIntents;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tuorg.walletlyaiapp.WalletluAIIntents;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -665,7 +675,7 @@
 			};
 			name = Debug;
 		};
-		A7356D562EA7461100109731 /* Release */ = {
+		A7A273372EA89C120046FFDD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -684,8 +694,8 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = WalletlyAIIntents/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = WalletlyAIIntents;
+				INFOPLIST_FILE = WalletluAIIntents/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = WalletluAIIntents;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -696,7 +706,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.tuorg.walletlyaiapp.WalletlyAIIntents;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tuorg.walletlyaiapp.WalletluAIIntents;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -730,11 +740,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A7356D582EA7461100109731 /* Build configuration list for PBXNativeTarget "WalletlyAIIntents" */ = {
+		A7A273392EA89C120046FFDD /* Build configuration list for PBXNativeTarget "WalletluAIIntents" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A7356D552EA7461100109731 /* Debug */,
-				A7356D562EA7461100109731 /* Release */,
+				A7A273362EA89C120046FFDD /* Debug */,
+				A7A273372EA89C120046FFDD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

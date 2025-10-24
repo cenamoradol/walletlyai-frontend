@@ -1,4 +1,3 @@
-// ios/WalletlyAIIntents/WalletIAShortcuts.swift
 import AppIntents
 
 struct WalletIAShortcuts: AppShortcutsProvider {
