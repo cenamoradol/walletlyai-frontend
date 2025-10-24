@@ -43,7 +43,7 @@ struct SaveTransactionIntent: AppIntent {
         guard let http = resp as? HTTPURLResponse, 200..<300 ~= http.statusCode else {
             // (Opcional) imprime el status para depurar en Console.app
             // os_log("save-transaction status: %d", (resp as? HTTPURLResponse)?.statusCode ?? -1)
-            throw NSError(domain: "WalletIA", code: -2, userInfo: [NSLocalizedDescriptionKey: "Respuesta HTTP no válida"])
+            throw NSError(domain: "WalletIA", code: -2, userInfo: [NSLocalizedDescriptionKey: "Respuesta HTTP no válida \(http)"])
         }
 
         return .result()
